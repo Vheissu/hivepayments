@@ -1,0 +1,24 @@
+import { HiveRates } from './hive-rates';
+
+export function convertHiveAmount(amount, fiatSymbol, hiveSymbol) {
+    if (fiatSymbol === hiveSymbol) {
+        return amount;
+    }
+
+    const rates = new HiveRates();
+
+    const rate = rates.fiatToHiveRate(fiatSymbol, hiveSymbol);
+    const total = amount / rate;
+    
+    return rate > 0 ? roundPrecision(total, 3) : 0;
+}
+
+export function roundPrecision(value, precision) {
+    const NUMBER_SIGN = value >= 0 ? 1 : -1;
+
+    return parseFloat((Math.round((value * Math.pow(10, precision)) + (NUMBER_SIGN * 0.0001)) / Math.pow(10, precision)).toFixed(precision));
+}
+
+export function randomRange(min = 0, max = 2000) {
+    return (!isNaN(min) && !isNaN(max) ? Math.floor(Math.random() * (max - min + 1)) + min : NaN); 
+}

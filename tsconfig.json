@@ -12,10 +12,10 @@
         "paths": {
             "*": [
                 "node_modules/*",
-                "server/src/types/*"
+                "types/*"
             ]
         }
     },
-    "include": ["server/src", "server/tests"],
+    "include": ["src", "tests"],
     "exclude": ["node_modules", ".vscode", "dist"]
 }

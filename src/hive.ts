@@ -1,4 +1,4 @@
-import { randomRange } from './functions';
+import { generateMemo } from './functions';
 
 import config from './config';
 
@@ -25,7 +25,7 @@ export class Hive {
     }
 
     public setMemo(memo: string) {
-        this.memo = memo ?? this.generateMemo();
+        this.memo = memo ?? generateMemo();
     }
 
     public setAmounts(amounts) {
@@ -96,18 +96,5 @@ export class Hive {
             const amount = amountArr[0].toLocaleString('en');
             const symbol = amountArr[1];
         }
-    }
-
-    public generateMemo(length = 12) {
-        let memo = '';
-
-        const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const max = characters.length - 1;
-
-        for (let i = 0; i < length; i++) {
-            memo += characters[randomRange(0, max)];
-        }
-
-        return memo;
     }
 }

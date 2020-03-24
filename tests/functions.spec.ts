@@ -1,4 +1,4 @@
-import { roundPrecision, randomRange } from '../src/functions';
+import { roundPrecision, randomRange, generateMemo } from '../src/functions';
 
 describe('Functions', () => {
 
@@ -35,6 +35,16 @@ describe('Functions', () => {
 
         test('Pass non numeric values to random range', () => {
             expect(randomRange('dd' as any, 'asjj' as any)).toBeNaN();
+        });
+    });
+
+    describe('Generate Memo', () => {
+        test('Generates a memo 6 characters in length', () => {
+            expect(generateMemo(6)).toHaveLength(6);
+        });
+    
+        test('Generates a memo using default 12 character length', () => {
+            expect(generateMemo()).toHaveLength(12);
         });
     });
 

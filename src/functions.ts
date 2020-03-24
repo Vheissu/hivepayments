@@ -22,3 +22,16 @@ export function roundPrecision(value, precision) {
 export function randomRange(min = 0, max = 2000) {
     return (!isNaN(min) && !isNaN(max) ? Math.floor(Math.random() * (max - min + 1)) + min : NaN); 
 }
+
+export function generateMemo(length = 12) {
+    let memo = '';
+
+    const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const max = characters.length - 1;
+
+    for (let i = 0; i < length; i++) {
+        memo += characters[randomRange(0, max)];
+    }
+
+    return memo;
+}

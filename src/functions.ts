@@ -1,11 +1,13 @@
 import { HiveRates } from './hive-rates';
 
-export function convertHiveAmount(amount, fiatSymbol, hiveSymbol) {
+export async function convertHiveAmount(amount, fiatSymbol, hiveSymbol) {
     if (fiatSymbol === hiveSymbol) {
         return amount;
     }
 
     const rates = new HiveRates();
+
+    await rates.fetchRates();
 
     const rate = rates.fiatToHiveRate(fiatSymbol, hiveSymbol);
     const total = amount / rate;

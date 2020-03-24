@@ -8,12 +8,17 @@ export class BittrexExchange extends Exchange {
         const BTC_HIVE = parseFloat(await this.fetchRate('BTC', 'HIVE'));
         const BTC_HBD = parseFloat(await this.fetchRate('BTC', 'HBD'));
 
-        if (!USD_BTC || !BTC_HIVE || BTC_HBD) {
+        if (isNaN(USD_BTC) || isNaN(BTC_HIVE) || isNaN(BTC_HBD)) {
             return false;
         }
 
         const USD_HIVE = USD_BTC * BTC_HIVE;
         const USD_HBD = USD_BTC * BTC_HBD; 
+
+        this.rateUsdHive = USD_HIVE;
+        this.rateUsdHbd = USD_HBD;
+
+        return true;
     }
 
     private async fetchRate(from: string, to: string) {

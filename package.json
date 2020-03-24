@@ -18,6 +18,7 @@
         "typescript": "^3.8.3"
     },
     "dependencies": {
+        "bignumber.js": "^9.0.0",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
         "hive-stream": "^1.0.3",

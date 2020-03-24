@@ -1,19 +1,25 @@
 import { Exchange } from './exchange';
 
+import BigNumber from 'bignumber.js';
+
 export class BittrexExchange extends Exchange {
     public exchangeId = 'bittrex';
 
     public async fetchRates() {
-        const USD_BTC = parseFloat(await this.fetchRate('USD', 'BTC'));
-        const BTC_HIVE = parseFloat(await this.fetchRate('BTC', 'HIVE'));
-        const BTC_HBD = parseFloat(await this.fetchRate('BTC', 'HBD'));
+        const USD_BTC = new BigNumber(await this.fetchRate('USD', 'BTC'));
+        const BTC_HIVE = new BigNumber(await this.fetchRate('BTC', 'HIVE'));
+        const BTC_HBD = new BigNumber(await this.fetchRate('BTC', 'HBD'));
 
-        if (isNaN(USD_BTC) || isNaN(BTC_HIVE) || isNaN(BTC_HBD)) {
+        if (isNaN(USD_BTC.toNumber()) || isNaN(BTC_HIVE.toNumber()) || isNaN(BTC_HBD.toNumber())) {
             return false;
         }
 
-        const USD_HIVE = USD_BTC * BTC_HIVE;
-        const USD_HBD = USD_BTC * BTC_HBD; 
+        console.log(USD_BTC);
+
+        const USD_HIVE = USD_BTC.multipliedBy(BTC_HIVE).toNumber();
+        const USD_HBD = USD_BTC.multipliedBy(BTC_HBD).toNumber(); 
+
+        console.log(USD_HIVE, USD_HBD);
 
         this.rateUsdHive = USD_HIVE;
         this.rateUsdHbd = USD_HBD;

@@ -7,7 +7,7 @@ export class HiveRates {
     private lastFetch;
     private oneHour = 1000 * 60 * 60;
 
-    public fetchRates() {
+    public async fetchRates() {
         let hiveAverage = 0;
         let hbdAverage = 0;
 
@@ -19,7 +19,11 @@ export class HiveRates {
         const exchanges = [new BittrexExchange];
 
         for (const exchange of exchanges) {
-            if (exchange.updateRates()) {
+            const updated = await exchange.updateRates();
+
+            console.log(updated);
+
+            if (updated) {
                 exchangesUpdated = true;
 
                 const usdHiveRate = exchange.rateUsdHive;
@@ -37,6 +41,8 @@ export class HiveRates {
             }
         }
 
+        const fiatRates = await this.getFiatRates();
+
         if (hiveCount === 0 && hbdCount === 0) {
             return false;
         }
@@ -49,7 +55,7 @@ export class HiveRates {
             hbdAverage = hbdAverage / hbdCount;
         }
 
-        for (const [symbol, value] of this.fiatRates.entries()) {
+        for (const [symbol, value] of Object.entries(this.fiatRates)) {
             this.hiveRates[`USD_${symbol}`] = value;
             this.hiveRates[`${symbol}_HIVE`] = hiveAverage * value;
             this.hiveRates[`${symbol}_HBD`] = hbdAverage * value;
@@ -59,15 +65,15 @@ export class HiveRates {
     }
     
     public fiatToHiveRate(fiatSymbol, hiveSymbol) {
-        if (!this.fiatRates || !Array.isArray(this.fiatRates)) {
+        if (!this.hiveRates) {
             return null;
         }
 
-        if (!this.fiatRates[`${fiatSymbol}_${hiveSymbol}`]) {
+        if (!this.hiveRates[`${fiatSymbol}_${hiveSymbol}`]) {
             return null;
         }
 
-        return this.fiatRates[`${fiatSymbol}_${hiveSymbol}`];
+        return this.hiveRates[`${fiatSymbol}_${hiveSymbol}`];
     }
 
     private async getFiatRates(base = 'USD') {

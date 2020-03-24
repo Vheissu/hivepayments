@@ -1,6 +1,10 @@
-import { roundPrecision, randomRange, generateMemo } from '../src/functions';
+import { roundPrecision, randomRange, generateMemo, getTransferUrl, convertHiveAmount } from '../src/functions';
 
 describe('Functions', () => {
+
+    beforeEach(() => {
+        fetchMock.resetMocks();
+    })
 
     describe('Round Precision', () => {
         test('Properly rounds precision of number to 3 places', () => {
@@ -45,6 +49,35 @@ describe('Functions', () => {
     
         test('Generates a memo using default 12 character length', () => {
             expect(generateMemo()).toHaveLength(12);
+        });
+    });
+
+    describe('Convert Hive Amount', () => {
+        test('Converts amount', async () => {
+            const amount = 25;
+            const fiatSymbol = 'USD';
+            const hiveSymbol = 'HIVE';
+
+            fetchMock
+                .once(JSON.stringify({'success':true,'message':'','result':{'Bid':0.00003054,'Ask':0.00003250,'Last':0.00003150}}))
+                .once(JSON.stringify({'success':true,'message':'','result':{'Bid':0.00003083,'Ask':0.00003169,'Last':0.00003192}}))
+                .once(JSON.stringify({'success':true,'message':'','result':{'Bid':0.00010800,'Ask':0.00010900,'Last':0.00010800}}))
+                .once(JSON.stringify({'rates':{'CAD':1.4383752203,'HKD':7.7558193453,'ISK':140.4989335064,'PHP':51.4003524066,'DKK':6.9281276083,'HUF':326.7458035797,'CZK':25.6283038116,'GBP':0.862190485,'RON':4.4960586108,'SEK':10.2675507744,'IDR':16574.9976815358,'INR':76.1620142817,'BRL':5.0683483261,'RUB':79.8293610313,'HRK':7.053695632,'JPY':110.4609106928,'THB':32.8646944264,'CHF':0.982101456,'EUR':0.9273856997,'MYR':4.4449596587,'BGN':1.8137809515,'TRY':6.5859222851,'CNY':7.0838356673,'NOK':11.3667810442,'NZD':1.7563757767,'ZAR':17.6333116943,'USD':1.0,'MXN':24.6805156264,'SGD':1.4601687842,'AUD':1.7236390615,'ILS':3.6698506909,'KRW':1256.7003616804,'PLN':4.2711675786},'base':'USD','date':'2020-03-23'}));
+    
+            const value = await convertHiveAmount(amount, fiatSymbol, hiveSymbol);
+            
+            expect(fetchMock).toBeCalledWith(`https://api.bittrex.com/api/v1.1/public/getticker?market=USD-BTC`);
+            expect(fetchMock).toBeCalledWith(`https://api.bittrex.com/api/v1.1/public/getticker?market=BTC-HIVE`);
+            expect(fetchMock).toBeCalledWith(`https://api.bittrex.com/api/v1.1/public/getticker?market=BTC-HBD`);
+            expect(fetchMock).toBeCalledWith(`https://api.exchangeratesapi.io/latest?base=USD`);
+
+            expect(value).toStrictEqual(24863746668.258);
+        });
+    });
+
+    describe('Get transfer URL', () => {
+        test('Gets a transfer URL string', () => {
+            expect(getTransferUrl('beggars', 'TEST123', '10.000 HIVE', 'http://localhost:5001')).toStrictEqual(`https://hivesigner.com/sign/transfer?to=beggars&memo=TEST123&amount=10.000 HIVE&redirect_uri=http://localhost:5001`);
         });
     });
 

@@ -26,13 +26,21 @@ app.get('/pay/:from/:to', (req, res) => {
 
 });
 
-app.get('/getTransfer/:id', async (req, res) => {
+app.get('/getTransfer/:id/:memo?', async (req, res) => {
     const client = streamer['client'];
     const history = await client.call('database_api', 'get_account_history', [req.params.id, -1, 20]);
     const transfers = history.filter(tx => tx[1].op[0] === 'transfer');
 
     const actualTransfers = transfers.reduce((arr, tx) => {
-        arr.push(tx[1].op[1]);
+        const transaction = tx[1].op[1];
+
+        if (!req.params.memo) {
+            arr.push(transaction);
+        } else {
+            if (transaction.memo === req.params.memo) {
+                arr.push(transaction);
+            } 
+        }
 
         return arr;
     }, []);

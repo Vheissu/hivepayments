@@ -37,3 +37,7 @@ export function generateMemo(length = 12) {
 
     return memo;
 }
+
+export function getTransferUrl(to: string, memo: string, amount: string, redirectUri: string) {
+    return `https://hivesigner.com/sign/transfer?to=${to}&memo=${memo}&amount=${amount}&redirect_uri=${redirectUri}`;
+}

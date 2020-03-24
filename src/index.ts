@@ -45,9 +45,7 @@ app.get('/getTransfer/:id/:memo?', async (req, res) => {
         return arr;
     }, []);
 
-    console.log(actualTransfers);
-
-    res.send('Yeah');
+    res.json(actualTransfers);
 });
 
 const server = app.listen(port, () => {

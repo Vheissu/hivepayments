@@ -1,7 +1,14 @@
 {
-  "devDependencies": {
-    "@types/express": "^4.17.3",
-    "@types/jest": "^25.1.4",
+    "license": "MIT",
+    "private": false,
+    "scripts": {
+        "build": "tsc",
+        "watch": "tsc -w",
+        "test": "jest --forceExit"
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.3",
+        "@types/jest": "^25.1.4",
     "@types/node": "^13.9.3",
     "jest": "^25.1.0",
     "jest-cli": "^25.1.0",

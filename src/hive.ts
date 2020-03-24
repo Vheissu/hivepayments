@@ -1,5 +1,7 @@
 import { randomRange } from './functions';
 
+import config from './config';
+
 export class Hive {
     private payee;
     private amount;
@@ -72,6 +74,28 @@ export class Hive {
 
     public getExchangeRate() {
         return this.exchangeRate;
+    }
+
+    public async getTransfer(account: string, memo?: string) {
+        let url = `${config.PAYMENT_API}/getTransfer/${account}`;
+
+        if (memo) {
+            url += `/${memo}`;
+        }
+
+        const request = await fetch(`${url}`);
+        const response = await request.json();
+
+        if (!response) {
+            return null;
+        }
+
+        for (const tx of response) {
+            const amountArr = tx.amount.split(' ');
+
+            const amount = amountArr[0].toLocaleString('en');
+            const symbol = amountArr[1];
+        }
     }
 
     public generateMemo(length = 12) {

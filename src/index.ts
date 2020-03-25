@@ -2,12 +2,14 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import { Streamer } from 'hive-stream';
+import { Hive } from './hive';
 
 import express from 'express';
 
 import config from './config';
 
 const streamer = new Streamer();
+const hive = new Hive();
 
 const app = express();
 const port = 5001;
@@ -22,8 +24,10 @@ app.get('/', (req, res) => {
     res.send('Invalid');
 });
 
-app.get('/pay/:from/:to', (req, res) => {
+app.get('/pay/:from/:amount/:currency', async (req, res) => {
+    const payment = await hive.createPayment(req.params.from, req.params.amount, req.params.currency);
 
+    res.send(payment);
 });
 
 app.get('/getTransfer/:id/:memo?', async (req, res) => {

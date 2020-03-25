@@ -4,7 +4,9 @@
     "scripts": {
         "build": "tsc",
         "watch": "tsc -w",
-        "test": "jest"
+        "test": "jest",
+        "start": "npx ts-node src/index.ts",
+        "clean": "npx ts-node src/cleanup.ts"
     },
     "devDependencies": {
         "@types/express": "^4.17.3",

@@ -14,12 +14,8 @@ export class BittrexExchange extends Exchange {
             return false;
         }
 
-        console.log(USD_BTC);
-
         const USD_HIVE = USD_BTC.multipliedBy(BTC_HIVE).toNumber();
-        const USD_HBD = USD_BTC.multipliedBy(BTC_HBD).toNumber(); 
-
-        console.log(USD_HIVE, USD_HBD);
+        const USD_HBD = USD_BTC.multipliedBy(BTC_HBD).toNumber();
 
         this.rateUsdHive = USD_HIVE;
         this.rateUsdHbd = USD_HBD;

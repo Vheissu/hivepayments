@@ -21,8 +21,6 @@ export class HiveRates {
         for (const exchange of exchanges) {
             const updated = await exchange.updateRates();
 
-            console.log(updated);
-
             if (updated) {
                 exchangesUpdated = true;
 

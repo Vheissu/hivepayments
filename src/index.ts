@@ -37,6 +37,9 @@ app.get('/getTransfer/:id/:memo?', async (req, res) => {
 
     const actualTransfers = transfers.reduce((arr, tx) => {
         const transaction = tx[1].op[1];
+        const date = new Date(`${tx[1].timestamp}Z`);
+
+        transaction.date = date;
 
         if (!req.params.memo) {
             arr.push(transaction);

@@ -1884,10 +1884,10 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
-hive-stream@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/hive-stream/-/hive-stream-1.0.3.tgz#f47412b279193521df94d4c15bb3a6647d6c8703"
-  integrity sha512-IOVv+AdZ4vrGJCpEslcgC2jrXXS2EFQUGhhNH6ZhUw2Rp3/eFNKLj2JWH9zhWBYXnDNVMl5wlIRDMI+xyeUItg==
+hive-stream@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/hive-stream/-/hive-stream-1.0.4.tgz#19590ffc0d6f03b3ac350b0888062e123c3020e0"
+  integrity sha512-Z4o+8fYgeA+ssvvvIkTRedAxBg+XJaKrtNseVq1cXTeRQ3M967WWnIcVDHjgOBy5dhRKs/25mGTsRznTPVRUUw==
   dependencies:
     dotenv "^8.2.0"
     dsteem "^0.11.3"

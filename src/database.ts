@@ -3,7 +3,7 @@ import config from './config';
 import { MongoClient } from 'mongodb';
 
 export async function find(collectionName: string, query: any) {
-    const client = await MongoClient.connect(config.DATABASE.URL, { useNewUrlParser: true }).catch(err => { console.log(err); });
+    const client = await MongoClient.connect(config.DATABASE.URL, { useNewUrlParser: true,  useUnifiedTopology: true }).catch(err => { console.log(err); });
 
     if (!client) {
         return;
@@ -11,9 +11,9 @@ export async function find(collectionName: string, query: any) {
 
     try {
         const db = client.db(config.DATABASE.NAME);
-        const collection = db.collection(collectionName);
+        const collection = await db.collection(collectionName);
 
-        return collection.find(query).toArray();
+        return await collection.find(query).toArray();
     } catch (e) {
         console.error(e);
     } finally {
@@ -22,7 +22,7 @@ export async function find(collectionName: string, query: any) {
 }
 
 export async function findOne(collectionName: string, query: any) {
-    const client = await MongoClient.connect(config.DATABASE.URL, { useNewUrlParser: true }).catch(err => { console.log(err); });
+    const client = await MongoClient.connect(config.DATABASE.URL, { useNewUrlParser: true,  useUnifiedTopology: true }).catch(err => { console.log(err); });
 
     if (!client) {
         return;
@@ -30,9 +30,9 @@ export async function findOne(collectionName: string, query: any) {
 
     try {
         const db = client.db(config.DATABASE.NAME);
-        const collection = db.collection(collectionName);
+        const collection = await db.collection(collectionName);
 
-        return collection.findOne(query);
+        return await collection.findOne(query);
     } catch (e) {
         console.error(e);
     } finally {
@@ -41,7 +41,7 @@ export async function findOne(collectionName: string, query: any) {
 }
 
 export async function insertOne(collectionName: string, doc: any) {
-    const client = await MongoClient.connect(config.DATABASE.URL, { useNewUrlParser: true }).catch(err => { console.log(err); });
+    const client = await MongoClient.connect(config.DATABASE.URL, { useNewUrlParser: true,  useUnifiedTopology: true }).catch(err => { console.log(err); });
 
     if (!client) {
         return;
@@ -49,9 +49,9 @@ export async function insertOne(collectionName: string, doc: any) {
 
     try {
         const db = client.db(config.DATABASE.NAME);
-        const collection = db.collection(collectionName);
+        const collection = await db.collection(collectionName);
 
-        return collection.insertOne(doc);
+        return await collection.insertOne(doc);
     } catch (e) {
         console.error(e);
     } finally {
@@ -59,7 +59,7 @@ export async function insertOne(collectionName: string, doc: any) {
     }
 }
 export async function insertMany(collectionName: string, docs: any[]) {
-    const client = await MongoClient.connect(config.DATABASE.URL, { useNewUrlParser: true }).catch(err => { console.log(err); });
+    const client = await MongoClient.connect(config.DATABASE.URL, { useNewUrlParser: true,  useUnifiedTopology: true }).catch(err => { console.log(err); });
 
     if (!client) {
         return;
@@ -67,9 +67,9 @@ export async function insertMany(collectionName: string, docs: any[]) {
 
     try {
         const db = client.db(config.DATABASE.NAME);
-        const collection = db.collection(collectionName);
+        const collection = await db.collection(collectionName);
 
-        return collection.insertMany(docs);
+        return await collection.insertMany(docs);
     } catch (e) {
         console.error(e);
     } finally {
@@ -78,7 +78,7 @@ export async function insertMany(collectionName: string, docs: any[]) {
 }
 
 export async function update(collectionName: string, query: any, data: any) {
-    const client = await MongoClient.connect(config.DATABASE.URL, { useNewUrlParser: true }).catch(err => { console.log(err); });
+    const client = await MongoClient.connect(config.DATABASE.URL, { useNewUrlParser: true,  useUnifiedTopology: true }).catch(err => { console.log(err); });
 
     if (!client) {
         return;
@@ -86,9 +86,9 @@ export async function update(collectionName: string, query: any, data: any) {
 
     try {
         const db = client.db(config.DATABASE.NAME);
-        const collection = db.collection(collectionName);
+        const collection = await db.collection(collectionName);
 
-        return collection.updateOne(query, data);
+        return await collection.updateOne(query, data);
     } catch (e) {
         console.error(e);
     } finally {
@@ -97,7 +97,7 @@ export async function update(collectionName: string, query: any, data: any) {
 }
 
 export async function remove(collectionName: string, query: any) {
-    const client = await MongoClient.connect(config.DATABASE.URL, { useNewUrlParser: true }).catch(err => { console.log(err); });
+    const client = await MongoClient.connect(config.DATABASE.URL, { useNewUrlParser: true,  useUnifiedTopology: true }).catch(err => { console.log(err); });
 
     if (!client) {
         return;
@@ -105,9 +105,9 @@ export async function remove(collectionName: string, query: any) {
 
     try {
         const db = client.db(config.DATABASE.NAME);
-        const collection = db.collection(collectionName);
+        const collection = await db.collection(collectionName);
 
-        return collection.deleteOne(query);
+        return await collection.deleteOne(query);
     } catch (e) {
         console.error(e);
     } finally {
@@ -116,7 +116,7 @@ export async function remove(collectionName: string, query: any) {
 }
 
 export async function createIndex(collectionName: string, query: any) {
-    const client = await MongoClient.connect(config.DATABASE.URL, { useNewUrlParser: true }).catch(err => { console.log(err); });
+    const client = await MongoClient.connect(config.DATABASE.URL, { useNewUrlParser: true,  useUnifiedTopology: true }).catch(err => { console.log(err); });
 
     if (!client) {
         return;
@@ -124,7 +124,7 @@ export async function createIndex(collectionName: string, query: any) {
 
     try {
         const db = client.db(config.DATABASE.NAME);
-        const collection = db.collection(collectionName);
+        const collection = await db.collection(collectionName);
 
         return collection.createIndex(query);
     } catch (e) {

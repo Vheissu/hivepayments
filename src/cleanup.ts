@@ -1,4 +1,4 @@
-import { find, remove } from "./database";
+import { find, remove } from './database';
 
 const ONE_HOUR = 1000 * 60 * 60;
 
@@ -9,9 +9,9 @@ async function cleanupOldPayments() {
 
     if (payments?.length) {
         for (const payment of payments) {
-            if (payment.date < HOUR_AGO) {
-                await remove('payments', { _id: payment._id });
-            }
+        if (payment.date < HOUR_AGO) {
+            await remove('payments', { _id: payment._id });
+        }
         }
     }
 }

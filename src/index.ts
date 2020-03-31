@@ -32,7 +32,7 @@ app.get('/pay/:from/:amount/:currency', async (req, res) => {
 
 app.get('/getTransfer/:id/:memo?', async (req, res) => {
     const client = streamer['client'];
-    const history = await client.call('database_api', 'get_account_history', [req.params.id, -1, 100]);
+    const history = await client.call('database_api', 'get_account_history', [req.params.id, -1, 50]);
     const transfers = history.filter(tx => tx[1].op[0] === 'transfer');
 
     const actualTransfers = transfers.reduce((arr, tx) => {

@@ -4,6 +4,9 @@ const customGlobal: GlobalWithFetchMock = global as GlobalWithFetchMock;
 customGlobal.fetch = require('jest-fetch-mock');
 customGlobal.fetchMock = customGlobal.fetch;;
 
+process.env.AES_KEY = 'dfsdfhjksdhfksjdhf';
+process.env.HIVE_PUBLIC_KEY = 'STM5BqcVEu9Mb5LRrkYyrnNPrjt5qkbM1aEcKW37KtnNg4LBDThDk';
+
 // (global as any).console = {
 //     log: jest.fn(), // console.log are ignored in tests
 
